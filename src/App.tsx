@@ -1,33 +1,41 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Search from './Search';
+
+import { shuffleArray } from './utils';
+
+const allNames = [
+  "Hemant",
+  "Shilpa",
+  "Arushi",
+  "Aaroh",
+  "Tatya",
+  "Dada"
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  console.log("Rendering App");
+  const [names,setNames] = useState(allNames);
+
+  const handleSearch = (text: string) =>{
+    const filteredNames = allNames.filter((name) =>
+      name.includes(text)
+    );
+    console.log("Setting names");
+    setNames(filteredNames);
+  }
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <ul>
+        {names.map((name,index) =>(<li key={index}>{name}</li>))}
+        </ul>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Search onChange={handleSearch} />
+      <button type='button' 
+        onClick={() => {setNames(shuffleArray(allNames))}}
+      >Shuffle</button>
     </>
   )
 }
