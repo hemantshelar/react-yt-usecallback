@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import './App.css'
 import Search from './Search';
 
@@ -17,13 +17,14 @@ function App() {
   console.log("Rendering App");
   const [names,setNames] = useState(allNames);
 
-  const handleSearch = (text: string) =>{
+    const handleSearch = useCallback(
+    (text: string) =>{
     const filteredNames = allNames.filter((name) =>
       name.includes(text)
     );
     console.log("Setting names");
     setNames(filteredNames);
-  }
+  },[]);
 
   return (
     <>
